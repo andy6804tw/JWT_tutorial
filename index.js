@@ -16,7 +16,7 @@ app.post('/api/login',(req, res) => {
   const user = { id: 3 }
   const token =jwt.sign({ user }, 'my_serect_key')
   res.json({
-    token: token
+    token: `JWT ${token}`
   })
 })
 
