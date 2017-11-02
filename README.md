@@ -1,6 +1,9 @@
 # JWT 教學
 JSON Web Token (JWT)取代傳統token驗證使用者身份
 
+流程：
+使用者登入 -> 產生API token -> 進行API路徑存取時先JWT認證 -> 驗證成功才允許訪問該API
+
 ## Usage
 1. clone the repository
 ```
@@ -16,12 +19,6 @@ $ yarn install
 $ yarn start
 ```
 
-## Tutorial
-1. inital package
-```
-$ yarn init -y
-$ yarn add express jsonwebtoken passport-jwt passport passport-local
-```
 ## API Router
 
 ### 1. 
@@ -35,7 +32,6 @@ return:
     "text": "my api"
 }
 ```
-
 ### 2. 
 path: http://localhost:8000/api/login
 
@@ -50,29 +46,33 @@ password: 0000
 Reponse:
 ```
 {
-    "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozfSwiaWF0IjoxNTA5NjEyNDgxfQ.n5UivhRudFB9NIAyJ6kgRmNiLUvlmDwr8OHtVI_CoQs"
+    "user": {
+        "id": 3,
+        "email": "andy@mail.com",
+        "password": "0000"
+    },
+    "token": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhbmR5QG1haWwuY29tIiwicGFzc3dvcmQiOiIwMDAwIiwiaWF0IjoxNTA5NjA5NzY3fQ.ORgKKRRQ5qF1P_sB5MMzLLVrUSxjWHZijjlZXW4A__4"
 }
 ```
 
-### 3.
+### 3. 
 path: http://localhost:8000/api/product  
 
 method: GET
 
 Parameters (headers) :
 ```
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozfSwiaWF0IjoxNTA5NjEyNDgxfQ.n5UivhRudFB9NIAyJ6kgRmNiLUvlmDwr8OHtVI_CoQs
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhbmR5QG1haWwuY29tIiwicGFzc3dvcmQiOiIwMDAwIiwiaWF0IjoxNTA5NjA5NzY3fQ.ORgKKRRQ5qF1P_sB5MMzLLVrUSxjWHZijjlZXW4A__4
 ```
 
 Reponse:
 ```
 {
     "text": "this is product",
-    "data": {
-        "user": {
-            "id": 3
-        },
-        "iat": 1509612481
+    "user": {
+        "id": 3,
+        "email": "andy@mail.com",
+        "password": "0000"
     }
 }
 ```
